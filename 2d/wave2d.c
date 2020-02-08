@@ -33,7 +33,6 @@ int main()
         float *unew;
         float *u;
         float *uold;
-        unsigned char *vizimage;
         float dx=2*pi/nx;
         float dy=2*pi/ny;
         float dt=0.05;
@@ -48,8 +47,7 @@ int main()
         unew=(float*)calloc(nx*ny,sizeof(float));
         u=(float*)calloc(nx*ny,sizeof(float));
         uold=(float*)calloc(nx*ny,sizeof(float));
-        vizimage=(unsigned char*)calloc(nx*ny,sizeof(unsigned char));
-
+       
         // setup grid
         for(int i=0;i<nx;i++) x[i]=i*dx;
         for(int j=0;j<ny;j++) y[j]=j*dy;
