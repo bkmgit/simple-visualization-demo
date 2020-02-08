@@ -49,13 +49,13 @@ int main()
         uold=(float*)calloc(nx*ny,sizeof(float));
        
         // setup grid
-        for(int i=0;i<nx;i++) x[i]=i*dx;
-        for(int j=0;j<ny;j++) y[j]=j*dy;
+        for(unsigned int i=0;i<nx;i++) x[i]=i*dx;
+        for(unsigned int j=0;j<ny;j++) y[j]=j*dy;
 
         // setup initial data
-        for(int j=0;j<ny;j++)
+        for(unsigned int j=0;j<ny;j++)
         {
-                for(int i=0;i<nx;i++) 
+                for(unsigned int i=0;i<nx;i++) 
                 {
                         u[i+j*nx]=sin(i*dx)*cos(2*j*dy);
                         uold[i+j*nx]=sin(i*dx)*cos(2*j*dy);
@@ -64,16 +64,16 @@ int main()
 
         // do timestepping
         // loop is unrolled to minimize copies
-        for(int n=0;n<nt/3;n++)
+        for(unsigned int n=0;n<nt/3;n++)
         {
-                for(int j=0;j<ny;j++)
+                for(unsigned int j=0;j<ny;j++)
                 {
-                        int jplus=(j+1)%ny;
-                        int jminus=(j+ny-1)%ny;
-                        for(int i=0;i<nx;i++)
+                        unsigned int jplus=(j+1)%ny;
+                        unsigned int jminus=(j+ny-1)%ny;
+                        for(unsigned int i=0;i<nx;i++)
                         {
-                                int iplus=(i+1)%nx;
-                                int iminus=(i+nx-1)%nx;
+                                unsigned int iplus=(i+1)%nx;
+                                unsigned int iminus=(i+nx-1)%nx;
                                 unew[i+j*nx]=2*u[i+j*nx]-uold[i+j*nx]
                                         +dt*dt*(u[i+j*nx]*u[i+j*nx]*u[i+j*nx] - u[i+j*nx]
                                                 +(u[iplus+j*nx]-2*u[i+j*nx]+u[iminus+j*nx])/(dx*dx)
@@ -82,14 +82,14 @@ int main()
                 }
 
 
-                for(int j=0;j<ny;j++)
+                for(unsigned int j=0;j<ny;j++)
                 {
-                        int jplus=(j+1)%ny;
-                        int jminus=(j+ny-1)%ny;
-                        for(int i=0;i<nx;i++)
+                        unsigned int jplus=(j+1)%ny;
+                        unsigned int jminus=(j+ny-1)%ny;
+                        for(unsigned int i=0;i<nx;i++)
                         {
-                                int iplus=(i+1)%nx;
-                                int iminus=(i+nx-1)%nx;
+                                unsigned int iplus=(i+1)%nx;
+                                unsigned int iminus=(i+nx-1)%nx;
                                 uold[i+j*nx]=2*unew[i+j*nx]-u[i+j*nx]
                                         +dt*dt*(unew[i+j*nx]*unew[i+j*nx]*unew[i+j*nx] - unew[i+j*nx]
                                                +(unew[iplus+j*nx]-2*unew[i+j*nx]+unew[iminus+j*nx])/(dx*dx)
@@ -101,14 +101,14 @@ int main()
                 // initialize to scale image
                 umax=-1000;
                 umin= 1000;
-                for(int j=0;j<ny;j++)
+                for(unsigned int j=0;j<ny;j++)
                 {
-                        int jplus=(j+1)%ny;
-                        int jminus=(j+ny-1)%ny;
-                        for(int i=0;i<nx;i++)
+                        unsigned int jplus=(j+1)%ny;
+                        unsigned int jminus=(j+ny-1)%ny;
+                        for(unsigned int i=0;i<nx;i++)
                         {
-                                int iplus=(i+1)%nx;
-                                int iminus=(i+nx-1)%nx;
+                                unsigned int iplus=(i+1)%nx;
+                                unsigned int iminus=(i+nx-1)%nx;
                                 u[i+j*nx]=2*uold[i+j*nx]-unew[i+j*nx]
                                         +dt*dt*(uold[i+j*nx]*uold[i+j*nx]*uold[i+j*nx] - uold[i+j*nx]
                                               +(uold[iplus+j*nx]-2*uold[i+j*nx]+uold[iminus+j*nx])/(dx*dx)
@@ -127,9 +127,9 @@ int main()
                         fprintf(fid,"0\n");
                 else
                         fprintf(fid,"255\n");
-                for(int j=0;j<ny;j++)
+                for(unsigned int j=0;j<ny;j++)
                 {
-                        for(int i=0;i<nx;i++)
+                        for(unsigned int i=0;i<nx;i++)
                         {
                                 // prevent division by zero and add a small visualization error
                                 unsigned char temp = (unsigned char) 
